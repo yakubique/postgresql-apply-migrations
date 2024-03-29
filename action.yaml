@@ -28,9 +28,13 @@ inputs:
     required: true
     default: 'postgres'
     description: 'PostgreSQL database'
+  to_file:
+    required: false
+    default: 'false'
+    description: 'Save migration results to file'
 outputs:
   migrations:
-    description: Applied migrations list
+    description: Applied migrations list (or path to result if `to_file=true`)
 runs:
   using: 'node20'
   main: 'action/index.js'

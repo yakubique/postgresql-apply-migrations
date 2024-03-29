@@ -25,7 +25,7 @@ migrations
 ## Usage
 ```yaml
 - name: Apply PostgreSQL migrations
-  uses: yakubique/postgresql-apply-migrations@v1
+  uses: yakubique/postgresql-apply-migrations@v1.1
   with:
     migrations: './.github/migrations'
     host: ${{ env.PG_HOST }}
@@ -42,11 +42,12 @@ migrations
 |------------|--------|----------|--------------|---------------------------------|
 | migrations | string |   true   |              |    Path to migrations folder    |
 |    host    | string |   true   |              |         PostgreSQL host         |
-|  password  | string |   true   |              |       PostgreSQL password       |
 |  username  | string |   true   |              |       PostgreSQL username       |
+|  password  | string |   true   |              |       PostgreSQL password       |
 |     db     | string |   true   | `"postgres"` |       PostgreSQL database       |
 |    port    | string |   true   |   `"5432"`   | PostgreSQL port (default: 5432) |
 |    ssl     | string |  false   |   `"true"`   |  SSL enabled (default: 'true')  |
+|  to_file   | string |  false   |  `"false"`   | Save migration results to file  |
 
 <!-- AUTO-DOC-INPUT:END -->
 
@@ -57,9 +58,9 @@ migrations
 
 <!-- AUTO-DOC-OUTPUT:START - Do not remove or modify this section -->
 
-|   OUTPUT   |  TYPE  |       DESCRIPTION       |
-|------------|--------|-------------------------|
-| migrations | string | Applied migrations list |
+|   OUTPUT   |  TYPE  |                          DESCRIPTION                           |
+|------------|--------|----------------------------------------------------------------|
+| migrations | string | Applied migrations list (or path to result if `to_file=true`)  |
 
 <!-- AUTO-DOC-OUTPUT:END -->
 

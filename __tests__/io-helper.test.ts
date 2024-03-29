@@ -28,6 +28,8 @@ describe('io-helper.ts', () => {
                     return 'password';
                 case Inputs.SSL:
                     return 'false';
+                case Inputs.ToFile:
+                    return 'false';
                 default:
                     return '';
             }
@@ -41,7 +43,8 @@ describe('io-helper.ts', () => {
             port: 5432,
             username: 'user',
             password: 'password',
-            ssl: false
+            ssl: false,
+            toFile: false
         } as ActionInputs);
     });
 });

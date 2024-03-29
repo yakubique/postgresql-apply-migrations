@@ -1,4 +1,4 @@
-import { buildOutput } from '@yakubique/atils/dist';
+import { buildOutput, outputJson } from '@yakubique/atils/dist';
 import * as core from '@actions/core';
 import { ActionInputs, getInputs } from './io-helper';
 import * as fs from 'node:fs';
@@ -36,7 +36,7 @@ export async function run() {
         const migrations = await migrate({ client }, path.resolve(inputs.migrations));
 
         setOutputs({
-            migrations
+            migrations: outputJson(migrations, inputs.toFile)
         });
 
         core.info('Success!');

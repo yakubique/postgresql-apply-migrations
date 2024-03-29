@@ -9,6 +9,7 @@ export enum Inputs {
     Username = 'username',
     Password = 'password',
     SSL = 'ssl',
+    ToFile = 'to_file'
 }
 
 export interface ActionInputs {
@@ -19,6 +20,7 @@ export interface ActionInputs {
     username: string;
     password: string;
     ssl: boolean;
+    toFile: boolean;
 }
 
 const required = { required: true };
@@ -37,6 +39,7 @@ export function getInputs(): ActionInputs {
     result.port = getNumberInput(Inputs.Port, required);
 
     result.ssl = getBooleanInput(Inputs.SSL);
+    result.toFile = getBooleanInput(Inputs.ToFile);
 
     return result;
 }
