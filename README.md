@@ -1,0 +1,70 @@
+# Apply PostgreSQL migrations
+
+[![Coverage](./badges/coverage.svg)](./badges/coverage.svg)
+[![Test `postgresql-apply-migrations` action](https://github.com/yakubique/postgresql-apply-migrations/actions/workflows/test-myself.yaml/badge.svg)](https://github.com/yakubique/postgresql-apply-migrations/actions/workflows/test-myself.yaml)
+
+Automatically applies SQL migrations to your database.
+
+Supports PostgreSQL 9.4+
+
+Action uses [thomwright/postgres-migrations](https://github.com/thomwright/postgres-migrations)
+> A PostgreSQL migration library inspired by the Stack Overflow system described in [Nick Craver's blog](http://nickcraver.com/blog/2016/05/03/stack-overflow-how-we-do-deployment-2016-edition/#database-migrations).
+
+
+Migrations are defined in sequential SQL files, for example:
+```text
+migrations
+├ 1_create-table.sql
+├ 2_alter-table.sql
+└ 3_add-index.sql
+```
+
+
+[Usage workflow](https://github.com/yakubique/postgresql-apply-migrations/actions/workflows/test-myself.yaml)
+
+## Usage
+```yaml
+- name: Apply PostgreSQL migrations
+  uses: yakubique/postgresql-apply-migrations@v1
+  with:
+    migrations: './.github/migrations'
+    host: ${{ env.PG_HOST }}
+    username: ${{ env.PG_USER }}
+    password: ${{ env.PG_PWD }}
+
+```
+
+## Inputs
+
+<!-- AUTO-DOC-INPUT:START - Do not remove or modify this section -->
+
+|   INPUT    |  TYPE  | REQUIRED |   DEFAULT    |           DESCRIPTION           |
+|------------|--------|----------|--------------|---------------------------------|
+| migrations | string |   true   |              |    Path to migrations folder    |
+|    host    | string |   true   |              |         PostgreSQL host         |
+|  password  | string |   true   |              |       PostgreSQL password       |
+|  username  | string |   true   |              |       PostgreSQL username       |
+|     db     | string |   true   | `"postgres"` |       PostgreSQL database       |
+|    port    | string |   true   |   `"5432"`   | PostgreSQL port (default: 5432) |
+|    ssl     | string |  false   |   `"true"`   |  SSL enabled (default: 'true')  |
+
+<!-- AUTO-DOC-INPUT:END -->
+
+
+
+
+## Outputs
+
+<!-- AUTO-DOC-OUTPUT:START - Do not remove or modify this section -->
+
+|   OUTPUT   |  TYPE  |       DESCRIPTION       |
+|------------|--------|-------------------------|
+| migrations | string | Applied migrations list |
+
+<!-- AUTO-DOC-OUTPUT:END -->
+
+
+
+----
+
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/S6S1UZ9P7)

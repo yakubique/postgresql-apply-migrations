@@ -1,0 +1,55 @@
+name: Test `postgresql-apply-migrations` action
+on:
+  push:
+    branches:
+      - main
+
+env:
+  PG_USER: postgres
+  PG_PWD: mypassword
+  PG_DB: postgres
+  PG_HOST: localhost
+  PG_PORT: 5432
+
+
+jobs:
+  test-postgresql-apply-migrations:
+    runs-on: [ 'ubuntu-latest' ]
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_PASSWORD: ${{ env.PG_PWD }}
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    name: Test
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Test
+        id: test
+        uses: ./
+        with:
+          migrations: './.github/migrations'
+          host: ${{ env.PG_HOST }}
+          port: ${{ env.PG_PORT }}
+          username: ${{ env.PG_USER }}
+          password: ${{ env.PG_PWD }}
+          db: ${{ env.PG_DB }}
+          ssl: 'false'
+      - name: Get names
+        id: names
+        uses: yakubique/json-utils@v1.6
+        with:
+          action: get
+          key: name
+          input: '${{ steps.test.outputs.migrations }}'
+      - name: Check
+        run: |
+          echo "${{ steps.names.outputs.result }}"
+          test "${{ steps.names.outputs.result }}" = "[create-migrations-table,test_table,insert]"
